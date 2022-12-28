@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="" />
+
+
+<title>_</title>
+
+<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/tabwid-1.1.2/tabwid.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.6.0/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Data Processing</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Cars</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">_</h1>
+<h4 class="author"></h4>
+
+</div>
+
+
+<div id="cars-data-processing" class="section level3">
+<h3>Cars Data Processing</h3>
+<div id="by-fredrick-ochuodho" class="section level5">
+<h5>by <a href="https://fredrickochuodho.github.io/">Fredrick
+Ochuodho</a></h5>
+</div>
+<div id="last-updated-2022-12-28" class="section level5">
+<h5>Last updated: 2022-12-28</h5>
+<p><img src="images/car_image.jpg" /></p>
+<p>The data give the speed of cars and the distances taken to stop. Note
+that the data were recorded in the 1920s. It is a data frame with 50
+observations on 2 variables.</p>
+<table style="border-collapse:collapse; border:none;">
+<caption>
+Data frame: .
+</caption>
+<tr>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+ID
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Name
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Type
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Label
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+missings
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Values
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Value Labels
+</th>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+speed
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+0 (0.00%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;" colspan="2">
+<em>range: 4-25</em>
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+dist
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+numeric
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+0 (0.00%)
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee" colspan="2">
+<em>range: 2-120</em>
+</td>
+</tr>
+</table>
+<p>The table below gives a snapshot of the first 10 data points in the
+Car Data set that would be used in the entire section to provide some
+insight of how data can be structured to provide a data-driven decision
+making.</p>
+</div>
+<div id="data-table" class="section level4">
+<h4>Data Table</h4>
+<template id="478b5caf-e342-48bf-b1db-9a912a305f24"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  border-color: transparent;
+  caption-side: top;
+}
+.tabwid-caption-bottom table{
+  caption-side: bottom;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td, .tabwid th {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+    margin: 0 0 !important;
+}
+</style><div class="tabwid"><style>.cl-53350960{}.cl-5317ae74{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-5324282a{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5324d23e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5324d252{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5324d25c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-53350960'><thead><tr style="overflow-wrap:break-word;"><th class="cl-5324d23e"><p class="cl-5324282a"><span class="cl-5317ae74">speed</span></p></th><th class="cl-5324d23e"><p class="cl-5324282a"><span class="cl-5317ae74">dist</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">4</span></p></td><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">4</span></p></td><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">10</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">7</span></p></td><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">7</span></p></td><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">22</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">8</span></p></td><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">16</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">9</span></p></td><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">10</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">10</span></p></td><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">18</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">10</span></p></td><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">26</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">10</span></p></td><td class="cl-5324d252"><p class="cl-5324282a"><span class="cl-5317ae74">34</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5324d25c"><p class="cl-5324282a"><span class="cl-5317ae74">11</span></p></td><td class="cl-5324d25c"><p class="cl-5324282a"><span class="cl-5317ae74">17</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="309d88dc-c32f-4608-a0d8-de5a7153976e"></div>
+<script>
+var dest = document.getElementById("309d88dc-c32f-4608-a0d8-de5a7153976e");
+var template = document.getElementById("478b5caf-e342-48bf-b1db-9a912a305f24");
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+</div>
+</div>
+<div id="cars-summary-table" class="section level3">
+<h3>Cars Summary Table</h3>
+<p>The Cars Summary table provides Summary Statistics of the two numeric
+Variables Speed and Distance.</p>
+<template id="8139c644-4810-4f1b-ac79-fa827890e1d3"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  border-color: transparent;
+  caption-side: top;
+}
+.tabwid-caption-bottom table{
+  caption-side: bottom;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td, .tabwid th {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+    margin: 0 0 !important;
+}
+</style><div class="tabwid"><style>.cl-5389e5ac{}.cl-53690454{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-53742820{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-53742848{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5374a16a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5374a1d8{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5374a1f6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5374a200{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5374a214{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5374a228{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-5389e5ac'><thead><tr style="overflow-wrap:break-word;"><th class="cl-5374a16a"><p class="cl-53742820"><span class="cl-53690454">Variable</span></p></th><th class="cl-5374a1d8"><p class="cl-53742848"><span class="cl-53690454">n_Obs</span></p></th><th class="cl-5374a1d8"><p class="cl-53742848"><span class="cl-53690454">Mean</span></p></th><th class="cl-5374a1d8"><p class="cl-53742848"><span class="cl-53690454">SD</span></p></th><th class="cl-5374a1d8"><p class="cl-53742848"><span class="cl-53690454">Median</span></p></th><th class="cl-5374a1d8"><p class="cl-53742848"><span class="cl-53690454">MAD</span></p></th><th class="cl-5374a1d8"><p class="cl-53742848"><span class="cl-53690454">Min</span></p></th><th class="cl-5374a1d8"><p class="cl-53742848"><span class="cl-53690454">Max</span></p></th><th class="cl-5374a1d8"><p class="cl-53742848"><span class="cl-53690454">Skewness</span></p></th><th class="cl-5374a1d8"><p class="cl-53742848"><span class="cl-53690454">Kurtosis</span></p></th><th class="cl-5374a1d8"><p class="cl-53742848"><span class="cl-53690454">n_Missing</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-5374a1f6"><p class="cl-53742820"><span class="cl-53690454">speed</span></p></td><td class="cl-5374a200"><p class="cl-53742848"><span class="cl-53690454">50</span></p></td><td class="cl-5374a200"><p class="cl-53742848"><span class="cl-53690454">15.40</span></p></td><td class="cl-5374a200"><p class="cl-53742848"><span class="cl-53690454">5.287644</span></p></td><td class="cl-5374a200"><p class="cl-53742848"><span class="cl-53690454">15</span></p></td><td class="cl-5374a200"><p class="cl-53742848"><span class="cl-53690454">5.9304</span></p></td><td class="cl-5374a200"><p class="cl-53742848"><span class="cl-53690454">4</span></p></td><td class="cl-5374a200"><p class="cl-53742848"><span class="cl-53690454">25</span></p></td><td class="cl-5374a200"><p class="cl-53742848"><span class="cl-53690454">-0.1175099</span></p></td><td class="cl-5374a200"><p class="cl-53742848"><span class="cl-53690454">-0.5089944</span></p></td><td class="cl-5374a200"><p class="cl-53742848"><span class="cl-53690454">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5374a214"><p class="cl-53742820"><span class="cl-53690454">dist</span></p></td><td class="cl-5374a228"><p class="cl-53742848"><span class="cl-53690454">50</span></p></td><td class="cl-5374a228"><p class="cl-53742848"><span class="cl-53690454">42.98</span></p></td><td class="cl-5374a228"><p class="cl-53742848"><span class="cl-53690454">25.769377</span></p></td><td class="cl-5374a228"><p class="cl-53742848"><span class="cl-53690454">36</span></p></td><td class="cl-5374a228"><p class="cl-53742848"><span class="cl-53690454">23.7216</span></p></td><td class="cl-5374a228"><p class="cl-53742848"><span class="cl-53690454">2</span></p></td><td class="cl-5374a228"><p class="cl-53742848"><span class="cl-53690454">120</span></p></td><td class="cl-5374a228"><p class="cl-53742848"><span class="cl-53690454">0.8068950</span></p></td><td class="cl-5374a228"><p class="cl-53742848"><span class="cl-53690454">0.4050526</span></p></td><td class="cl-5374a228"><p class="cl-53742848"><span class="cl-53690454">0</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="45d1fa7e-4b82-4b2e-95b8-438667d614a7"></div>
+<script>
+var dest = document.getElementById("45d1fa7e-4b82-4b2e-95b8-438667d614a7");
+var template = document.getElementById("8139c644-4810-4f1b-ac79-fa827890e1d3");
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+</div>
+<div id="data-visualization" class="section level3">
+<h3>Data Visualization</h3>
+<p>One visual is more more than a thousand - word/text explaining an
+outcome of a data analysis. Therefore, in this subsection we would
+provide some data visuals from the Cars data set. The visualization
+would provide a clear picture of what the data would mean in the real
+World set up.</p>
+<div id="histograms-of-individual-variables" class="section level4">
+<h4>Histograms of Individual Variables</h4>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-133a23aa52548b54b501" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-133a23aa52548b54b501">{"x":{"data":[{"orientation":"v","width":[10,10,10,10,10,10,10,10,10,10,10,10,10],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[0,10,20,30,40,50,60,70,80,90,100,110,120],"y":[2,3,7,12,5,7,4,3,4,2,0,0,1],"text":["count:  2<br />dist:   0","count:  3<br />dist:  10","count:  7<br />dist:  20","count: 12<br />dist:  30","count:  5<br />dist:  40","count:  7<br />dist:  50","count:  4<br />dist:  60","count:  3<br />dist:  70","count:  4<br />dist:  80","count:  2<br />dist:  90","count:  0<br />dist: 100","count:  0<br />dist: 110","count:  1<br />dist: 120"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(173,216,230,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":48.9497716894977},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Stopping Distance Histogram","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-11.5,131.5],"tickmode":"array","ticktext":["0","40","80","120"],"tickvals":[0,40,80,120],"categoryorder":"array","categoryarray":["0","40","80","120"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Distance","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.6,12.6],"tickmode":"array","ticktext":["0.0","2.5","5.0","7.5","10.0","12.5"],"tickvals":[0,2.5,5,7.5,10,12.5],"categoryorder":"array","categoryarray":["0.0","2.5","5.0","7.5","10.0","12.5"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Number of the Cars","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"2154ef13dea":{"x":{},"type":"bar"}},"cur_data":"2154ef13dea","visdat":{"2154ef13dea":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>From the above Histogram we Can deduce that 30 ft is the Stopping
+Distance of many Car. Most Cars are also stopping within 0 to 90 ft
+while only one Car has the Capability of stopping at 120 ft. This
+provides an insight whether to consider it an outlier. As a result we
+might be interested to plot a box plot to investigate further.</p>
+<p><img src="index_files/figure-html/Dist_Box-1.png" width="672" /> As
+was detected by the histogram in the previous Chat, Seemingly the Car
+with the Stopping distance might be an outlier in this Cars Dataset.</p>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a96c6b89f4ba8318d720" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-a96c6b89f4ba8318d720">{"x":{"data":[{"orientation":"v","width":[2,2,2,2,2,2,2,2,2,2,2],"base":[0,0,0,0,0,0,0,0,0,0,0],"x":[4,6,8,10,12,14,16,18,20,22,24],"y":[2,2,2,5,8,7,5,7,5,2,5],"text":["count: 2<br />speed:  4","count: 2<br />speed:  6","count: 2<br />speed:  8","count: 5<br />speed: 10","count: 8<br />speed: 12","count: 7<br />speed: 14","count: 5<br />speed: 16","count: 7<br />speed: 18","count: 5<br />speed: 20","count: 2<br />speed: 22","count: 5<br />speed: 24"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(173,216,230,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":31.4155251141553},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Stopping Speed Histogram","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[1.9,26.1],"tickmode":"array","ticktext":["5","10","15","20","25"],"tickvals":[5,10,15,20,25],"categoryorder":"array","categoryarray":["5","10","15","20","25"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Speed","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.4,8.4],"tickmode":"array","ticktext":["0","2","4","6","8"],"tickvals":[0,2,4,6,8],"categoryorder":"array","categoryarray":["0","2","4","6","8"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Number of the Cars","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"215455584316":{"x":{},"type":"bar"}},"cur_data":"215455584316","visdat":{"215455584316":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="a-scatter-plot-of-speed-against-the-stopping-distance"
+class="section level4">
+<h4>A scatter plot of Speed Against The Stopping Distance</h4>
+<p><img src="index_files/figure-html/Scatter-1.png" width="672" /></p>
+</div>
+<div id="scatter-plot-with-a-fitted-linear-regression-line"
+class="section level4">
+<h4>Scatter Plot with a Fitted Linear Regression line</h4>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d015f97461ec46315170" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-d015f97461ec46315170">{"x":{"data":[{"x":[2,10,4,22,16,10,18,26,34,17,28,14,20,24,28,26,34,34,46,26,36,60,80,20,26,54,32,40,32,40,50,42,56,76,84,36,46,68,32,48,52,56,64,66,54,70,92,93,120,85],"y":[4,4,7,7,8,9,10,10,10,11,11,12,12,12,12,13,13,13,13,14,14,14,14,15,15,15,16,16,17,17,17,18,18,18,18,19,19,19,20,20,20,20,20,22,23,24,24,24,24,25],"text":["dist:   2<br />speed:  4","dist:  10<br />speed:  4","dist:   4<br />speed:  7","dist:  22<br />speed:  7","dist:  16<br />speed:  8","dist:  10<br />speed:  9","dist:  18<br />speed: 10","dist:  26<br />speed: 10","dist:  34<br />speed: 10","dist:  17<br />speed: 11","dist:  28<br />speed: 11","dist:  14<br />speed: 12","dist:  20<br />speed: 12","dist:  24<br />speed: 12","dist:  28<br />speed: 12","dist:  26<br />speed: 13","dist:  34<br />speed: 13","dist:  34<br />speed: 13","dist:  46<br />speed: 13","dist:  26<br />speed: 14","dist:  36<br />speed: 14","dist:  60<br />speed: 14","dist:  80<br />speed: 14","dist:  20<br />speed: 15","dist:  26<br />speed: 15","dist:  54<br />speed: 15","dist:  32<br />speed: 16","dist:  40<br />speed: 16","dist:  32<br />speed: 17","dist:  40<br />speed: 17","dist:  50<br />speed: 17","dist:  42<br />speed: 18","dist:  56<br />speed: 18","dist:  76<br />speed: 18","dist:  84<br />speed: 18","dist:  36<br />speed: 19","dist:  46<br />speed: 19","dist:  68<br />speed: 19","dist:  32<br />speed: 20","dist:  48<br />speed: 20","dist:  52<br />speed: 20","dist:  56<br />speed: 20","dist:  64<br />speed: 20","dist:  66<br />speed: 22","dist:  54<br />speed: 23","dist:  70<br />speed: 24","dist:  92<br />speed: 24","dist:  93<br />speed: 24","dist: 120<br />speed: 24","dist:  85<br />speed: 25"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,128,1)","opacity":0.3,"size":1.88976377952756,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,128,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2,3.49367088607595,4.9873417721519,6.48101265822785,7.9746835443038,9.46835443037975,10.9620253164557,12.4556962025316,13.9493670886076,15.4430379746835,16.9367088607595,18.4303797468354,19.9240506329114,21.4177215189873,22.9113924050633,24.4050632911392,25.8987341772152,27.3924050632911,28.8860759493671,30.379746835443,31.873417721519,33.3670886075949,34.8607594936709,36.3544303797468,37.8481012658228,39.3417721518987,40.8354430379747,42.3291139240506,43.8227848101266,45.3164556962025,46.8101265822785,48.3037974683544,49.7974683544304,51.2911392405063,52.7848101265823,54.2784810126582,55.7721518987342,57.2658227848101,58.7594936708861,60.253164556962,61.746835443038,63.2405063291139,64.7341772151899,66.2278481012658,67.7215189873418,69.2151898734177,70.7088607594937,72.2025316455696,73.6962025316456,75.1898734177215,76.6835443037975,78.1772151898734,79.6708860759494,81.1645569620253,82.6582278481013,84.1518987341772,85.6455696202532,87.1392405063291,88.6329113924051,90.126582278481,91.620253164557,93.1139240506329,94.6075949367089,96.1012658227848,97.5949367088608,99.0886075949367,100.582278481013,102.075949367089,103.569620253165,105.063291139241,106.556962025316,108.050632911392,109.544303797468,111.037974683544,112.53164556962,114.025316455696,115.518987341772,117.012658227848,118.506329113924,120],"y":[8.61504079107581,8.86234425700023,9.10964772292466,9.35695118884908,9.60425465477351,9.85155812069794,10.0988615866224,10.3461650525468,10.5934685184712,10.8407719843956,11.0880754503201,11.3353789162445,11.5826823821689,11.8299858480933,12.0772893140178,12.3245927799422,12.5718962458666,12.819199711791,13.0665031777155,13.3138066436399,13.5611101095643,13.8084135754887,14.0557170414132,14.3030205073376,14.550323973262,14.7976274391864,15.0449309051109,15.2922343710353,15.5395378369597,15.7868413028842,16.0341447688086,16.281448234733,16.5287517006574,16.7760551665819,17.0233586325063,17.2706620984307,17.5179655643551,17.7652690302796,18.012572496204,18.2598759621284,18.5071794280528,18.7544828939773,19.0017863599017,19.2490898258261,19.4963932917505,19.743696757675,19.9910002235994,20.2383036895238,20.4856071554482,20.7329106213727,20.9802140872971,21.2275175532215,21.4748210191459,21.7221244850704,21.9694279509948,22.2167314169192,22.4640348828436,22.7113383487681,22.9586418146925,23.2059452806169,23.4532487465413,23.7005522124658,23.9478556783902,24.1951591443146,24.442462610239,24.6897660761635,24.9370695420879,25.1843730080123,25.4316764739367,25.6789799398612,25.9262834057856,26.17358687171,26.4208903376345,26.6681938035589,26.9154972694833,27.1628007354077,27.4101042013322,27.6574076672566,27.904711133181,28.1520145991054],"text":["dist:   2.000000<br />speed:  8.615041","dist:   3.493671<br />speed:  8.862344","dist:   4.987342<br />speed:  9.109648","dist:   6.481013<br />speed:  9.356951","dist:   7.974684<br />speed:  9.604255","dist:   9.468354<br />speed:  9.851558","dist:  10.962025<br />speed: 10.098862","dist:  12.455696<br />speed: 10.346165","dist:  13.949367<br />speed: 10.593469","dist:  15.443038<br />speed: 10.840772","dist:  16.936709<br />speed: 11.088075","dist:  18.430380<br />speed: 11.335379","dist:  19.924051<br />speed: 11.582682","dist:  21.417722<br />speed: 11.829986","dist:  22.911392<br />speed: 12.077289","dist:  24.405063<br />speed: 12.324593","dist:  25.898734<br />speed: 12.571896","dist:  27.392405<br />speed: 12.819200","dist:  28.886076<br />speed: 13.066503","dist:  30.379747<br />speed: 13.313807","dist:  31.873418<br />speed: 13.561110","dist:  33.367089<br />speed: 13.808414","dist:  34.860759<br />speed: 14.055717","dist:  36.354430<br />speed: 14.303021","dist:  37.848101<br />speed: 14.550324","dist:  39.341772<br />speed: 14.797627","dist:  40.835443<br />speed: 15.044931","dist:  42.329114<br />speed: 15.292234","dist:  43.822785<br />speed: 15.539538","dist:  45.316456<br />speed: 15.786841","dist:  46.810127<br />speed: 16.034145","dist:  48.303797<br />speed: 16.281448","dist:  49.797468<br />speed: 16.528752","dist:  51.291139<br />speed: 16.776055","dist:  52.784810<br />speed: 17.023359","dist:  54.278481<br />speed: 17.270662","dist:  55.772152<br />speed: 17.517966","dist:  57.265823<br />speed: 17.765269","dist:  58.759494<br />speed: 18.012572","dist:  60.253165<br />speed: 18.259876","dist:  61.746835<br />speed: 18.507179","dist:  63.240506<br />speed: 18.754483","dist:  64.734177<br />speed: 19.001786","dist:  66.227848<br />speed: 19.249090","dist:  67.721519<br />speed: 19.496393","dist:  69.215190<br />speed: 19.743697","dist:  70.708861<br />speed: 19.991000","dist:  72.202532<br />speed: 20.238304","dist:  73.696203<br />speed: 20.485607","dist:  75.189873<br />speed: 20.732911","dist:  76.683544<br />speed: 20.980214","dist:  78.177215<br />speed: 21.227518","dist:  79.670886<br />speed: 21.474821","dist:  81.164557<br />speed: 21.722124","dist:  82.658228<br />speed: 21.969428","dist:  84.151899<br />speed: 22.216731","dist:  85.645570<br />speed: 22.464035","dist:  87.139241<br />speed: 22.711338","dist:  88.632911<br />speed: 22.958642","dist:  90.126582<br />speed: 23.205945","dist:  91.620253<br />speed: 23.453249","dist:  93.113924<br />speed: 23.700552","dist:  94.607595<br />speed: 23.947856","dist:  96.101266<br />speed: 24.195159","dist:  97.594937<br />speed: 24.442463","dist:  99.088608<br />speed: 24.689766","dist: 100.582278<br />speed: 24.937070","dist: 102.075949<br />speed: 25.184373","dist: 103.569620<br />speed: 25.431676","dist: 105.063291<br />speed: 25.678980","dist: 106.556962<br />speed: 25.926283","dist: 108.050633<br />speed: 26.173587","dist: 109.544304<br />speed: 26.420890","dist: 111.037975<br />speed: 26.668194","dist: 112.531646<br />speed: 26.915497","dist: 114.025316<br />speed: 27.162801","dist: 115.518987<br />speed: 27.410104","dist: 117.012658<br />speed: 27.657408","dist: 118.506329<br />speed: 27.904711","dist: 120.000000<br />speed: 28.152015"],"type":"scatter","mode":"lines","name":"fitted values","line":{"width":3.77952755905512,"color":"rgba(51,102,255,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[98],"y":[20],"text":"dist = 3.9324 * speed - 17.5791","hovertext":"x: 98<br />y: 20","textfont":{"size":14.6645669291339,"color":"rgba(0,0,255,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":37.2602739726027},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Speed Against Stopping Distance","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-3.9,125.9],"tickmode":"array","ticktext":["0","25","50","75","100","125"],"tickvals":[0,25,50,75,100,125],"categoryorder":"array","categoryarray":["0","25","50","75","100","125"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Stopping Distance","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[2.79239927004473,29.3596153290607],"tickmode":"array","ticktext":["10","20"],"tickvals":[10,20],"categoryorder":"array","categoryarray":["10","20"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Speed of the Car","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"21541c98468e":{"x":{},"y":{},"type":"scatter"},"215446f688a":{"x":{},"y":{}},"2154563933c2":{"x":{},"y":{}}},"cur_data":"21541c98468e","visdat":{"21541c98468e":["function (y) ","x"],"215446f688a":["function (y) ","x"],"2154563933c2":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="the-correlation-between-stopping-distance-and-speed"
+class="section level4">
+<h4>The Correlation between Stopping Distance and Speed</h4>
+<p><img src="index_files/figure-html/ScatterStat-1.png" width="672" /></p>
+</div>
+</div>
+<div id="linear-regression-model" class="section level3">
+<h3>Linear Regression Model</h3>
+<template id="82c95900-48f4-494c-b2cf-2f326d178d69"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  border-color: transparent;
+  caption-side: top;
+}
+.tabwid-caption-bottom table{
+  caption-side: bottom;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td, .tabwid th {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+.katex-display {
+    margin: 0 0 !important;
+}
+</style><div class="tabwid"><style>.cl-5745d520{}.cl-572a908a{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-5737162a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5737163e{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-57374d8e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-57374da2{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-57374dac{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-57374dad{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-57374db6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-57374dc0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-5745d520'><thead><tr style="overflow-wrap:break-word;"><th class="cl-57374d8e"><p class="cl-5737162a"><span class="cl-572a908a">Parameter</span></p></th><th class="cl-57374da2"><p class="cl-5737163e"><span class="cl-572a908a">Coefficient</span></p></th><th class="cl-57374da2"><p class="cl-5737163e"><span class="cl-572a908a">CI</span></p></th><th class="cl-57374da2"><p class="cl-5737163e"><span class="cl-572a908a">CI_low</span></p></th><th class="cl-57374da2"><p class="cl-5737163e"><span class="cl-572a908a">CI_high</span></p></th><th class="cl-57374da2"><p class="cl-5737163e"><span class="cl-572a908a">t</span></p></th><th class="cl-57374da2"><p class="cl-5737163e"><span class="cl-572a908a">df_error</span></p></th><th class="cl-57374da2"><p class="cl-5737163e"><span class="cl-572a908a">p</span></p></th><th class="cl-57374da2"><p class="cl-5737163e"><span class="cl-572a908a">Std_Coefficient</span></p></th><th class="cl-57374da2"><p class="cl-5737163e"><span class="cl-572a908a">Std_Coefficient_CI_low</span></p></th><th class="cl-57374da2"><p class="cl-5737163e"><span class="cl-572a908a">Std_Coefficient_CI_high</span></p></th><th class="cl-57374da2"><p class="cl-5737163e"><span class="cl-572a908a">Fit</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-57374dac"><p class="cl-5737162a"><span class="cl-572a908a">(Intercept)</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">-17.579095</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">0.95</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">-31.167850</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">-3.990340</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">-2.601058</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">48</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">0.012318816153809090</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">0.00000000000000008705913</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">-0.1697028</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">0.1697028</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-57374dac"><p class="cl-5737162a"><span class="cl-572a908a">speed</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">3.932409</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">0.95</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">3.096964</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">4.767853</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">9.463990</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">48</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">0.000000000001489836</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">0.80689490068921021492798</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">0.6354692</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">0.9783206</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-57374dac"><p class="cl-5737162a"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-57374dac"><p class="cl-5737162a"><span class="cl-572a908a">AIC</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">419.1568630</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-57374dac"><p class="cl-5737162a"><span class="cl-572a908a">AICc</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">419.6786022</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-57374dac"><p class="cl-5737162a"><span class="cl-572a908a">BIC</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">424.8929320</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-57374dac"><p class="cl-5737162a"><span class="cl-572a908a">R2</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">0.6510794</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-57374dac"><p class="cl-5737162a"><span class="cl-572a908a">R2 (adj.)</span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dad"><p class="cl-5737163e"><span class="cl-572a908a">0.6438102</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-57374db6"><p class="cl-5737162a"><span class="cl-572a908a">Sigma</span></p></td><td class="cl-57374dc0"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dc0"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dc0"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dc0"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dc0"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dc0"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dc0"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dc0"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dc0"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dc0"><p class="cl-5737163e"><span class="cl-572a908a"></span></p></td><td class="cl-57374dc0"><p class="cl-5737163e"><span class="cl-572a908a">15.3795867</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="16b033de-d415-4c58-a9e8-00b29c0cd63e"></div>
+<script>
+var dest = document.getElementById("16b033de-d415-4c58-a9e8-00b29c0cd63e");
+var template = document.getElementById("82c95900-48f4-494c-b2cf-2f326d178d69");
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+<p>We fitted a linear model (estimated using OLS) to predict dist with
+speed (formula: dist ~ speed). The model explains a statistically
+significant and substantial proportion of variance (R2 = 0.65, F(1, 48)
+= 89.57, p &lt; .001, adj. R2 = 0.64). The model’s intercept,
+corresponding to speed = 0, is at -17.58 (95% CI [-31.17, -3.99], t(48)
+= -2.60, p = 0.012). Within this model:</p>
+<ul>
+<li>The effect of speed is statistically significant and positive (beta
+= 3.93, 95% CI [3.10, 4.77], t(48) = 9.46, p &lt; .001; Std. beta =
+0.81, 95% CI [0.64, 0.98])</li>
+</ul>
+<p>Standardized parameters were obtained by fitting the model on a
+standardized version of the dataset. 95% Confidence Intervals (CIs) and
+p-values were computed using a Wald t-distribution approximation.</p>
+<div id="visual-representation-of-the-regression-model-effect"
+class="section level4">
+<h4>Visual Representation of the Regression Model Effect</h4>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+</div>
+<div id="conclusion" class="section level3">
+<h3>Conclusion</h3>
+<p>In conclusion, linear model (estimated using OLS) to predict dist
+with speed (formula: dist ~ speed).The model explains a statistically
+significant and substantial proportion of variance (R2 = 0.65, F(1, 48)
+= 89.57, p &lt; .001, adj. R2 = 0.64). The intercept is statistically
+significant and negative (beta = -17.58, 95% CI [-31.17, -3.99], t(48) =
+-2.60, p = 0.012; Std. beta = 8.71e-17, 95% CI [-0.17, 0.17]), The
+effect of speed is statistically significant and positive (beta = 3.93,
+95% CI [3.10, 4.77], t(48) = 9.46, p &lt; .001; Std. beta = 0.81, 95% CI
+[0.64, 0.98]). Standardized parameters were obtained by fitting the
+model on a standardized version of the dataset. 95% Confidence Intervals
+(CIs) and p-values were computed using a Wald t-distribution
+approximation.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

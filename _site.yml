@@ -1,0 +1,13 @@
+
+name: "Data Processing"
+output_dir: "docs"
+navbar:
+      title: "Data Processing"
+      left:
+      - text: "Cars"
+        href: index.html
+     
+output:
+  html_document:
+    theme: spacelab
+    
